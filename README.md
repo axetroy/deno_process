@@ -8,7 +8,7 @@
 import {
   getProcess,
   getProcesses
-} from "https://github.com/axetroy/deno_process/master/mod.ts";
+} from "https://github.com/axetroy/deno_process/raw/master/mod.ts";
 
 getProcess(1); // get process info with pid
 getProcesses(); // get process list
