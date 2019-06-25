@@ -8,7 +8,7 @@ import { getProcess, getProcesses } from "./mod.ts";
 test(async function testGetProcess() {
   const ps = await getProcess(Deno.pid);
   assertEquals(ps.pid, Deno.pid);
-  assertEquals(ps.command, "deno");
+  assert(ps.command.length > 0);
 });
 
 test(async function testGetProcesses() {
