@@ -3,15 +3,10 @@ language: node_js
 os:
   - linux
   - osx
-  # - windows
+  - windows
 
 node_js:
   - 8.9.0
-
-cache:
-  yarn: false
-  directories:
-    - node_modules
 
 env:
   - DENO_VERSION=v0.9.0
