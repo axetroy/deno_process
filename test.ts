@@ -28,7 +28,12 @@ test(async function testGetProcesses() {
 
 test(async function testKillProcess() {
   const ps = run({
-    args: ["deno", "-A", "https://deno.land/std@v0.9.0/http/file_server.ts"],
+    args: [
+      "deno",
+      "-A",
+      "https://deno.land/std@v0.9.0/prettier/main.ts",
+      "mod.ts"
+    ],
     stdout: "inherit",
     stderr: "inherit"
   });
