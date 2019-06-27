@@ -9,13 +9,13 @@ node_js:
   - 8.9.0
 
 env:
-  - DENO_VERSION=v0.9.0
+  - DENO_VERSION=v0.10.0
 
 before_script:
   - if [ "$TRAVIS_OS_NAME" = "windows" ]; then iwr https://deno.land/x/install/install.ps1 -useb -outf install.ps1; .\install.ps1 $DENO_VERSION; fi
   - if [ "$TRAVIS_OS_NAME" != "windows" ]; then curl -sL https://deno.land/x/install/install.sh | sh -s $DENO_VERSION; fi
   - $HOME/.deno/bin/deno version
-  - $HOME/.deno/bin/deno fetch https://deno.land/std@v0.9.0/prettier/main.ts
+  - $HOME/.deno/bin/deno fetch https://deno.land/std@v0.9.0/http/file_server.ts
 
 script:
   - $HOME/.deno/bin/deno -A ./test.ts
