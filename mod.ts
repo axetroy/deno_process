@@ -1,4 +1,4 @@
-const { platform, run } = Deno;
+const { platform, run, readAll } = Deno;
 
 export interface Process {
   command: string;
@@ -9,6 +9,12 @@ export interface Process {
 
 export interface ProcessTree extends Process {
   children: ProcessTree[];
+}
+
+export interface KillOptions {
+  force?: boolean;
+  ignoreCase?: boolean;
+  tree?: boolean;
 }
 
 /**
@@ -85,4 +91,74 @@ export async function getProcessTree(): Promise<ProcessTree[]> {
   }
 
   return treeList;
+}
+
+function getKillCommand(
+  pidOrName: number | string,
+  options: KillOptions = {}
+): string[] {
+  const killByName = typeof pidOrName === "string";
+  if (platform.os === "win") {
+    const commands = ["taskkill"];
+
+    if (options.force) {
+      commands.push("/f");
+    }
+
+    if (options.tree) {
+      commands.push("/t");
+    }
+
+    commands.push(killByName ? "/im" : "/pid", pidOrName + "");
+
+    return commands;
+  } else if (platform.os === "linux") {
+    const commands = [killByName ? "killall" : "kill"];
+
+    if (options.force) {
+      commands.push("-9");
+    }
+
+    if (killByName && options.ignoreCase) {
+      commands.push("-I");
+    }
+
+    commands.push(pidOrName + "");
+
+    return commands;
+  } else {
+    const commands = [killByName ? "pkill" : "kill"];
+
+    if (options.force) {
+      commands.push("-9");
+    }
+
+    if (killByName && options.ignoreCase) {
+      commands.push("-i");
+    }
+
+    commands.push(pidOrName + "");
+
+    return commands;
+  }
+}
+
+export async function killProcess(
+  pidOrName: number | string,
+  options: KillOptions = {}
+): Promise<void> {
+  const commands = getKillCommand(pidOrName, options);
+
+  const ps = await run({
+    args: commands,
+    stderr: "piped",
+    stdout: "piped"
+  });
+
+  const { success, code } = await ps.status();
+
+  if (!success || code !== 0) {
+    const msg = new TextDecoder().decode(await readAll(ps.stderr));
+    throw new Error(msg || "exit with code: " + code);
+  }
 }
