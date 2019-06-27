@@ -149,6 +149,8 @@ export async function killProcess(
 ): Promise<void> {
   const commands = getKillCommand(pidOrName, options);
 
+  console.log(commands);
+
   const ps = await run({
     args: commands,
     stderr: "piped",
