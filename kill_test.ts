@@ -48,7 +48,7 @@ test(async function testKillProcess() {
 
   await sleep(2000);
 
-  await killProcess(ps.pid);
+  await killProcess(ps.pid, { force: Deno.platform.os === "win" });
 
   console.log("kill success.");
 });
