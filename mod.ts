@@ -39,13 +39,13 @@ export async function getProcesses(): Promise<Process[]> {
     stdout: "piped"
   });
 
+  const output = new TextDecoder().decode(await ps.output());
+
   const { success, code } = await ps.status();
 
   if (!success || code !== 0) {
     throw new Error("Fail to get process.");
   }
-
-  const output = new TextDecoder().decode(await ps.output());
 
   const lines = output.split("\n").filter((v: string): string => v.trim());
   lines.shift();
