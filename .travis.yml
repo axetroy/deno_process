@@ -1,12 +1,9 @@
-language: node_js
+language: minimal
 
 os:
   - linux
   - osx
   - windows
-
-node_js:
-  - 8.9.0
 
 env:
   - DENO_VERSION=v0.10.0
