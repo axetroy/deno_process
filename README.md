@@ -15,3 +15,7 @@ get(1); // get process info with pid
 getAll(); // get all process
 kill(1); // kill process
 ```
+
+## License
+
+The [MIT License](https://github.com/axetroy/deno_process/blob/master/LICENSE)
