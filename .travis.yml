@@ -9,7 +9,8 @@ env:
   - DENO_VERSION=v0.10.0
 
 before_script:
-  - if [ "$TRAVIS_OS_NAME" = "windows" ]; then iwr https://deno.land/x/install/install.ps1 -useb -outf install.ps1; .\install.ps1 $DENO_VERSION; fi
+  - if [ "$TRAVIS_OS_NAME" = "windows" ]; then iex (new-object net.webclient).downloadstring('https://get.scoop.sh')
+  - if [ "$TRAVIS_OS_NAME" = "windows" ]; then scoop install deno
   - if [ "$TRAVIS_OS_NAME" != "windows" ]; then curl -sL https://deno.land/x/install/install.sh | sh -s $DENO_VERSION; fi
   - $HOME/.deno/bin/deno version
   - $HOME/.deno/bin/deno fetch https://deno.land/std@v0.9.0/http/file_server.ts
