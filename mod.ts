@@ -21,14 +21,14 @@ export interface KillOptions {
  * Get the single process infomation.
  * @param pid
  */
-export async function getProcess(pid: number): Promise<Process> {
-  return (await getProcesses()).find(v => v.pid === pid);
+export async function get(pid: number): Promise<Process> {
+  return (await getAll()).find(v => v.pid === pid);
 }
 
 /**
  * Get process list
  */
-export async function getProcesses(): Promise<Process[]> {
+export async function getAll(): Promise<Process[]> {
   const commands =
     platform.os == "win"
       ? ["wmic.exe", "PROCESS", "GET", "Name,ProcessId,ParentProcessId,Status"]
@@ -74,8 +74,8 @@ function findChildProcess(pid: number, processList: Process[]): Process[] {
 /**
  * TODO: Get process tree
  */
-export async function getProcessTree(): Promise<ProcessTree[]> {
-  const processList = await getProcesses();
+export async function getTree(): Promise<ProcessTree[]> {
+  const processList = await getAll();
   const treeList: ProcessTree[] = [];
 
   for (const ps of processList) {
@@ -143,7 +143,7 @@ function getKillCommand(
   }
 }
 
-export async function killProcess(
+export async function kill(
   pidOrName: number | string,
   options: KillOptions = {}
 ): Promise<void> {

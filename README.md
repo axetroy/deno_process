@@ -6,12 +6,12 @@
 
 ```typescript
 import {
-  getProcess,
-  getProcesses,
-  killProcess
+  get,
+  getAll,
+  kill
 } from "https://github.com/axetroy/deno_process/raw/master/mod.ts";
 
-getProcess(1); // get process info with pid
-getProcesses(); // get process list
-killProcess(1); // kill process
+get(1); // get process info with pid
+getAll(); // get all process
+kill(1); // kill process
 ```
