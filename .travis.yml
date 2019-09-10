@@ -6,7 +6,7 @@ os:
   # - windows
 
 env:
-  - DENO_VERSION=v0.10.0
+  - DENO_VERSION=v0.17.0
 
 before_script:
   - sh ./test.sh
