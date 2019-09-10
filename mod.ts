@@ -1,10 +1,10 @@
 const { platform, run, readAll } = Deno;
 
 export interface Process {
-  command: string;
-  ppid: number;
-  pid: number;
-  stat: string;
+  command: string; // Command to run this process
+  ppid: number; // The parent process ID of the process
+  pid: number; // Process ID
+  stat: string; // Process status
 }
 
 export interface ProcessTree extends Process {
