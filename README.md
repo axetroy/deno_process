@@ -29,15 +29,15 @@ interface Process {
 }
 ```
 
-#### get(pid: number): Process
+#### get(pid: number): Promise < Process >
 
 Get process information by `pid`
 
-#### getAll(): []Process
+#### getAll(): Promise < []Process >
 
 Get all the process information currently running
 
-#### kill(pid: number): Promise<void>
+#### kill(pid: number): Promise< void >
 
 Kill the process by `pid`
 
