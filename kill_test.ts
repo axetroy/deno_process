@@ -8,7 +8,7 @@ function homedir(): string {
   let env = "HOME";
   let envErr = "$HOME";
 
-  if (Deno.platform.os === "win") {
+  if (Deno.build.os === "win") {
     env = "USERPROFILE";
     envErr = "%USERPROFILE%";
   }
@@ -36,7 +36,7 @@ test(async function testKill() {
         homedir(),
         ".deno",
         "bin",
-        "deno" + (Deno.platform.os === "win" ? ".exe" : "")
+        "deno" + (Deno.build.os === "win" ? ".exe" : "")
       ),
       "-A",
       "https://deno.land/std@v0.9.0/http/file_server.ts",
@@ -48,7 +48,7 @@ test(async function testKill() {
 
   await sleep(2000);
 
-  await kill(ps.pid, { force: Deno.platform.os === "win" });
+  await kill(ps.pid, { force: Deno.build.os === "win" });
 
   console.log("kill success.");
 });
