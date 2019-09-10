@@ -10,4 +10,4 @@ fi
 # print deno info
 $HOME/.deno/bin/deno version
 # prefetch
-$HOME/.deno/bin/deno fetch https://deno.land/std@v0.9.0/http/file_server.ts
+$HOME/.deno/bin/deno fetch https://deno.land/std@v0.17.0/http/file_server.ts
