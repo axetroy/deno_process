@@ -3,7 +3,7 @@ language: minimal
 os:
   - linux
   - osx
-  - windows
+  # - windows
 
 env:
   - DENO_VERSION=v0.10.0
