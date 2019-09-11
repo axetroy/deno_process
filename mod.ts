@@ -7,10 +7,6 @@ export interface Process {
   stat: string; // Process status
 }
 
-export interface ProcessTree extends Process {
-  children: ProcessTree[];
-}
-
 export interface KillOptions {
   force?: boolean;
   ignoreCase?: boolean;
@@ -63,34 +59,6 @@ export async function getAll(): Promise<Process[]> {
   );
 
   return processList;
-}
-
-function findChildProcess(pid: number, processList: Process[]): Process[] {
-  return processList
-    .map((v: Process): Process => (v.ppid === pid ? v : undefined))
-    .filter(v => v);
-}
-
-/**
- * TODO: Get process tree
- */
-export async function getTree(): Promise<ProcessTree[]> {
-  const processList = await getAll();
-  const treeList: ProcessTree[] = [];
-
-  for (const ps of processList) {
-    treeList.push({
-      ...ps,
-      children: findChildProcess(ps.pid, processList).map(v => {
-        return {
-          children: [],
-          ...v
-        };
-      })
-    });
-  }
-
-  return treeList;
 }
 
 function getKillCommand(
