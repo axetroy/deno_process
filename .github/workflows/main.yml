@@ -1,0 +1,15 @@
+jobs:
+  build:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        deno: [ 'v0.18.0']
+        os: [ubuntu-latest, macOS-latest, windows-latest]
+    name: Deno ${{ matrix.deno }} test
+    steps:
+      - uses: actions/checkout@master
+      - name: Setup deno
+        uses: denolib/setup-deno@v1
+        with:
+          deno-version: ${{ matrix.deno }}
+      - run: deno run ./test.ts
