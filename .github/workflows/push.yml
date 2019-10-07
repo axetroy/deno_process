@@ -7,7 +7,7 @@ jobs:
       matrix:
         deno: [ 'v0.18.0']
         os: [ubuntu-latest, macOS-latest, windows-latest]
-    name: Deno ${{ matrix.deno }} test
+    name: Deno ${{ matrix.deno }} test in ${{ matrix.os }}
     steps:
       - uses: actions/checkout@master
       - name: Setup deno
