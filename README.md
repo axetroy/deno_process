@@ -1,5 +1,3 @@
-[![Build Status](https://travis-ci.com/axetroy/deno_process.svg?branch=master)](https://travis-ci.com/axetroy/deno_process)
-
 ### Handle process with Deno
 
 ### Usage
