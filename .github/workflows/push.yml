@@ -14,4 +14,4 @@ jobs:
         uses: denolib/setup-deno@v1
         with:
           deno-version: ${{ matrix.deno }}
-      - run: deno run ./test.ts
+      - run: deno run --allow-run --allow-env ./test.ts
