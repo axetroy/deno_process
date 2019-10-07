@@ -1,4 +1,4 @@
-const { platform, run, readAll } = Deno;
+const { build, run, readAll } = Deno;
 
 export interface Process {
   command: string; // Command to run this process
@@ -26,7 +26,7 @@ export async function get(pid: number): Promise<Process> {
  */
 export async function getAll(): Promise<Process[]> {
   const commands =
-    platform.os == "win"
+    build.os == "win"
       ? ["wmic.exe", "PROCESS", "GET", "Name,ProcessId,ParentProcessId,Status"]
       : ["ps", "-A", "-o", "comm,ppid,pid,stat"];
 
@@ -66,7 +66,7 @@ function getKillCommand(
   options: KillOptions = {}
 ): string[] {
   const killByName = typeof pidOrName === "string";
-  if (platform.os === "win") {
+  if (build.os === "win") {
     const commands = ["taskkill"];
 
     if (options.force) {
@@ -80,7 +80,7 @@ function getKillCommand(
     commands.push(killByName ? "/im" : "/pid", pidOrName + "");
 
     return commands;
-  } else if (platform.os === "linux") {
+  } else if (build.os === "linux") {
     const commands = [killByName ? "killall" : "kill"];
 
     if (options.force) {
