@@ -5,7 +5,7 @@ jobs:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        deno: [ 'v0.18.0', 'v0.19.0']
+        deno: ['v0.20.0']
         os: [ubuntu-latest, macOS-latest, windows-latest]
     name: Deno ${{ matrix.deno }} test in ${{ matrix.os }}
     steps:
