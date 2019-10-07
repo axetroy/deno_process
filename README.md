@@ -1,3 +1,5 @@
+[![Build Status](https://github.com/axetroy/deno_process/workflows/test/badge.svg)](https://github.com/axetroy/deno_process/actions)
+
 ### Handle process with Deno
 
 ### Usage
