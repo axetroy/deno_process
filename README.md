@@ -43,4 +43,4 @@ Kill the process by `pid`
 
 ## License
 
-The [MIT License](https://github.com/axetroy/deno_process/blob/master/LICENSE)
+The [MIT License](LICENSE)
