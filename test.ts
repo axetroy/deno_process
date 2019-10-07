@@ -1,4 +1,4 @@
-import { runIfMain } from "https://deno.land/std@v0.17.0/testing/mod.ts";
+import { runIfMain } from "https://deno.land/std@v0.19.0/testing/mod.ts";
 
 import "./get_test.ts";
 import "./list_test.ts";

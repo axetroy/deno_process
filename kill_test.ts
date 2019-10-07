@@ -1,5 +1,5 @@
-import { runIfMain, test } from "https://deno.land/std@v0.17.0/testing/mod.ts";
-import { join } from "https://deno.land/std@v0.17.0/fs/path/mod.ts";
+import { runIfMain, test } from "https://deno.land/std@v0.19.0/testing/mod.ts";
+import { join } from "https://deno.land/std@v0.19.0/fs/path/mod.ts";
 import { kill } from "./mod.ts";
 
 const { run } = Deno;
@@ -39,7 +39,7 @@ test(async function testKill() {
         "deno" + (Deno.build.os === "win" ? ".exe" : "")
       ),
       "-A",
-      "https://deno.land/std@v0.17.0/http/file_server.ts",
+      "https://deno.land/std@v0.19.0/http/file_server.ts",
       "mod.ts"
     ],
     stdout: "inherit",

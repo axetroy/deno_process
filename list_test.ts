@@ -1,5 +1,5 @@
-import { assert } from "https://deno.land/std@v0.17.0/testing/asserts.ts";
-import { runIfMain, test } from "https://deno.land/std@v0.17.0/testing/mod.ts";
+import { assert } from "https://deno.land/std@v0.19.0/testing/asserts.ts";
+import { runIfMain, test } from "https://deno.land/std@v0.19.0/testing/mod.ts";
 import { getAll } from "./mod.ts";
 
 test(async function testGetAllProcesses() {
