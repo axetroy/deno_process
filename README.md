@@ -15,12 +15,7 @@ Features:
 all methods require `--allow-run` flags
 
 ```typescript
-import {
-  get,
-  getAll,
-  getTree,
-  kill
-} from "https://github.com/axetroy/deno_process/raw/master/mod.ts";
+import { get, getAll, getTree, kill } from "https://deno.land/x/process/mod.ts";
 
 console.log(await get(1)); // get process info with pid
 console.log(await getAll()); // get all process list
