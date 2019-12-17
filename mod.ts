@@ -5,6 +5,7 @@ export interface Process {
   ppid: number; // The parent process ID of the process
   pid: number; // Process ID
   stat: string; // Process status
+  children?: Process[];
 }
 
 export interface KillOptions {
@@ -15,6 +16,7 @@ export interface KillOptions {
 
 /**
  * Get the single process infomation.
+ * Requires `--allow-run` flag
  * @param pid
  */
 export async function get(pid: number): Promise<Process> {
@@ -23,6 +25,7 @@ export async function get(pid: number): Promise<Process> {
 
 /**
  * Get process list
+ * Requires `--allow-run` flag
  */
 export async function getAll(): Promise<Process[]> {
   const commands =
@@ -59,6 +62,27 @@ export async function getAll(): Promise<Process[]> {
   );
 
   return processList;
+}
+
+/**
+ * Get process tree
+ * Requires `--allow-run` flag
+ */
+export async function getTree(): Promise<Process[]> {
+  const items = await getAll();
+  const nest = (items: Process[], pid: number = 0, link: string = "ppid") =>
+    items
+      .filter(item => item[link] === pid)
+      .map(item => {
+        const children = nest(items, item.pid);
+        if (!children.length) {
+          return item;
+        } else {
+          return { ...item, children };
+        }
+      });
+
+  return nest(items);
 }
 
 function getKillCommand(
@@ -111,6 +135,12 @@ function getKillCommand(
   }
 }
 
+/**
+ * kill process
+ * Requires `--allow-run` flag
+ * @param pidOrName pid or process name
+ * @param options
+ */
 export async function kill(
   pidOrName: number | string,
   options: KillOptions = {}
