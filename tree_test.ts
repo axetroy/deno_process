@@ -7,9 +7,11 @@ import { getTree } from "./mod.ts";
 
 test(async function testGetProcessesTree() {
   const processList = await getTree();
-  assert(processList.length === 1);
+  assertEquals(processList.length, 1);
 
   const initProcess = processList[0];
+
+  console.log(initProcess);
 
   assertEquals(initProcess.pid, 1);
 
