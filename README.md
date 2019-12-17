@@ -12,6 +12,8 @@ Features:
 
 ### Usage
 
+all methods require `--allow-run` flags
+
 ```typescript
 import {
   get,
