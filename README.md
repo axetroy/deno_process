@@ -20,10 +20,11 @@ import {
   kill
 } from "https://github.com/axetroy/deno_process/raw/master/mod.ts";
 
-console.log(get(1)); // get process info with pid
-console.log(getAll()); // get all process list
-console.log(getTree()); // get process tree
-kill(1); // kill process
+console.log(await get(1)); // get process info with pid
+console.log(await getAll()); // get all process list
+console.log(await getTree()); // get process tree
+await kill(1024); // kill process by pid
+await kill("deno"); // kill process by name
 ```
 
 ## License
