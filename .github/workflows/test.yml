@@ -14,4 +14,6 @@ jobs:
         uses: denolib/setup-deno@master
         with:
           deno-version: ${{ matrix.deno }}
-      - run: deno test -A
+      - run: |
+          deno fmt --check *.md *.ts
+          deno test -A
