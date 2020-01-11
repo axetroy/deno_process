@@ -16,8 +16,7 @@ test(async function testKill() {
     args: [
       Deno.execPath(),
       "-A",
-      "https://deno.land/std@v0.29.0/http/file_server.ts",
-      "mod.ts"
+      "https://deno.land/std@v0.29.0/http/file_server.ts"
     ],
     stdout: "inherit",
     stderr: "inherit"
