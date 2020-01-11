@@ -1,4 +1,4 @@
-import { runIfMain, test } from "https://deno.land/std@v0.26.0/testing/mod.ts";
+import { runIfMain, test } from "https://deno.land/std@v0.29.0/testing/mod.ts";
 import { kill } from "./mod.ts";
 
 const { run } = Deno;
@@ -16,7 +16,7 @@ test(async function testKill() {
     args: [
       Deno.execPath(),
       "-A",
-      "https://deno.land/std@v0.26.0/http/file_server.ts",
+      "https://deno.land/std@v0.29.0/http/file_server.ts",
       "mod.ts"
     ],
     stdout: "inherit",
