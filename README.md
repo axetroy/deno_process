@@ -20,7 +20,7 @@ import {
   getAll,
   getTree,
   kill,
-} from 'https://deno.land/x@v0.2.0/process/mod.ts'
+} from 'https://deno.land/x/process@v0.2.0/mod.ts'
 
 console.log(await get(1)) // get process info with pid
 console.log(await getAll()) // get all process list
