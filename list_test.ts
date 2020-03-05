@@ -1,10 +1,9 @@
-import { assert } from "https://deno.land/std@v0.29.0/testing/asserts.ts";
-import { runIfMain, test } from "https://deno.land/std@v0.29.0/testing/mod.ts";
+import { assert } from "https://deno.land/std@v0.35.0/testing/asserts.ts";
 import { getAll } from "./mod.ts";
+
+const { test } = Deno;
 
 test(async function testGetAllProcesses() {
   const processList = await getAll();
   assert(processList.length > 0);
 });
-
-runIfMain(import.meta);

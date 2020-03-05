@@ -15,11 +15,11 @@ export interface KillOptions {
 }
 
 /**
- * Get the single process infomation.
+ * Get the single process information.
  * Requires `--allow-run` flag
  * @param pid
  */
-export async function get(pid: number): Promise<Process> {
+export async function get(pid: number): Promise<Process | void> {
   return (await getAll()).find(v => v.pid === pid);
 }
 
@@ -28,10 +28,9 @@ export async function get(pid: number): Promise<Process> {
  * Requires `--allow-run` flag
  */
 export async function getAll(): Promise<Process[]> {
-  const commands =
-    build.os == "win"
-      ? ["wmic.exe", "PROCESS", "GET", "Name,ProcessId,ParentProcessId,Status"]
-      : ["ps", "-A", "-o", "comm,ppid,pid,stat"];
+  const commands = build.os == "win"
+    ? ["wmic.exe", "PROCESS", "GET", "Name,ProcessId,ParentProcessId,Status"]
+    : ["ps", "-A", "-o", "comm,ppid,pid,stat"];
 
   const ps = run({
     args: commands,
@@ -70,9 +69,9 @@ export async function getAll(): Promise<Process[]> {
  */
 export async function getTree(): Promise<Process[]> {
   const items = await getAll();
-  const nest = (items: Process[], pid: number = 0, link: string = "ppid") =>
-    items
-      .filter(item => item[link] === pid)
+  const nest = (items: Process[], pid: number = 0): Process[] => {
+    return items
+      .filter(item => item.ppid === pid)
       .map(item => {
         const children = nest(items, item.pid);
         if (!children.length) {
@@ -80,7 +79,8 @@ export async function getTree(): Promise<Process[]> {
         } else {
           return { ...item, children };
         }
-      });
+      }) as Process[];
+  };
 
   return nest(items);
 }
@@ -156,7 +156,7 @@ export async function kill(
   const { success, code } = await ps.status();
 
   if (!success || code !== 0) {
-    const msg = new TextDecoder().decode(await readAll(ps.stderr));
+    const msg = new TextDecoder().decode(await readAll(ps.stderr!));
     throw new Error(msg || "exit with code: " + code);
   }
 }
