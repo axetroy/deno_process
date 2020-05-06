@@ -28,7 +28,7 @@ test({
 
     await sleep(5000);
 
-    const resBefore = await fetch("http://0.0.0.0:4500");
+    const resBefore = await fetch("http://localhost:4500");
 
     assertEquals(resBefore.ok, true);
     assertEquals(resBefore.status, 200);
@@ -37,7 +37,7 @@ test({
 
     await kill(ps.pid, { force: Deno.build.os === "windows" });
 
-    const resAfter = await fetch("http://0.0.0.0:4500");
+    const resAfter = await fetch("http://localhost:4500");
 
     assertEquals(resAfter.ok, false);
 
