@@ -20,7 +20,7 @@ export interface KillOptions {
  * @param pid
  */
 export async function get(pid: number): Promise<Process | void> {
-  return (await getAll()).find(v => v.pid === pid);
+  return (await getAll()).find((v) => v.pid === pid);
 }
 
 /**
@@ -28,18 +28,22 @@ export async function get(pid: number): Promise<Process | void> {
  * Requires `--allow-run` flag
  */
 export async function getAll(): Promise<Process[]> {
-  const commands = build.os == "win"
+  const commands = build.os == "windows"
     ? ["wmic.exe", "PROCESS", "GET", "Name,ProcessId,ParentProcessId,Status"]
     : ["ps", "-A", "-o", "comm,ppid,pid,stat"];
 
   const ps = run({
-    args: commands,
-    stdout: "piped"
+    cmd: commands,
+    stdout: "piped",
   });
 
-  const output = new TextDecoder().decode(await ps.output());
+  const output = new TextDecoder().decode(await readAll(ps.stdout!));
 
   const { success, code } = await ps.status();
+
+  ps.stdout?.close();
+
+  ps.close();
 
   if (!success || code !== 0) {
     throw new Error("Fail to get process.");
@@ -55,9 +59,9 @@ export async function getAll(): Promise<Process[]> {
         command: columns[0],
         ppid: +columns[1],
         pid: +columns[2],
-        stat: columns[3]
+        stat: columns[3],
       };
-    }
+    },
   );
 
   return processList;
@@ -71,8 +75,8 @@ export async function getTree(): Promise<Process[]> {
   const items = await getAll();
   const nest = (items: Process[], pid: number = 0): Process[] => {
     return items
-      .filter(item => item.ppid === pid)
-      .map(item => {
+      .filter((item) => item.ppid === pid)
+      .map((item) => {
         const children = nest(items, item.pid);
         if (!children.length) {
           return item;
@@ -87,10 +91,10 @@ export async function getTree(): Promise<Process[]> {
 
 function getKillCommand(
   pidOrName: number | string,
-  options: KillOptions = {}
+  options: KillOptions = {},
 ): string[] {
   const killByName = typeof pidOrName === "string";
-  if (build.os === "win") {
+  if (build.os === "windows") {
     const commands = ["taskkill"];
 
     if (options.force) {
@@ -143,17 +147,20 @@ function getKillCommand(
  */
 export async function kill(
   pidOrName: number | string,
-  options: KillOptions = {}
+  options: KillOptions = {},
 ): Promise<void> {
   const commands = getKillCommand(pidOrName, options);
 
-  const ps = await run({
-    args: commands,
+  const ps = run({
+    cmd: commands,
     stderr: "piped",
-    stdout: "piped"
   });
 
   const { success, code } = await ps.status();
+
+  ps.stderr?.close();
+
+  ps.close();
 
   if (!success || code !== 0) {
     const msg = new TextDecoder().decode(await readAll(ps.stderr!));
