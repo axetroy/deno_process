@@ -35,7 +35,7 @@ test({
 
     await resBefore.trailer;
 
-    await kill(ps.pid, { force: true });
+    await kill(ps.pid, { force: Deno.build.os === "windows" });
 
     const resAfter = await fetch("http://0.0.0.0:4500");
 
