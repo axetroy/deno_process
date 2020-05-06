@@ -16,6 +16,7 @@ jobs:
           deno-version: ${{ matrix.deno }}
 
       - name: Check code format
+        if: runner.os != 'Windows'
         env:
           RUST_BACKTRACE: 1
         run: |
