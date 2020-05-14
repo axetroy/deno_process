@@ -1,6 +1,6 @@
 import {
   assertEquals,
-} from "https://deno.land/std@v1.0.0-rc1/testing/asserts.ts";
+} from "https://deno.land/std@v0.50.0/testing/asserts.ts";
 import { kill } from "./mod.ts";
 
 const { test, run } = Deno;
@@ -21,7 +21,7 @@ test({
         Deno.execPath(),
         "run",
         "-A",
-        "https://deno.land/std@v1.0.0-rc1/http/file_server.ts",
+        "https://deno.land/std@v0.50.0/http/file_server.ts",
       ],
       cwd: Deno.cwd(),
     });
