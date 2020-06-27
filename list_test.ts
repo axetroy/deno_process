@@ -8,5 +8,7 @@ test({
   fn: async () => {
     const processList = await getAll();
     assert(processList.length > 0);
+
+    console.log(JSON.stringify(processList, null, 2));
   },
 });

@@ -6,10 +6,12 @@ const { test } = Deno;
 test({
   name: "GetProcessesTree",
   fn: async () => {
-    const processList = await getTree();
-    assert(processList.length > 0);
-    for (const ps of processList) {
+    const processTree = await getTree();
+    assert(processTree.length > 0);
+    for (const ps of processTree) {
       assert(ps.children!.length > 0);
     }
+
+    console.log(JSON.stringify(processTree, null, 2));
   },
 });
