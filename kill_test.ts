@@ -1,6 +1,8 @@
 import {
   assertEquals,
-} from "https://deno.land/std@v0.50.0/testing/asserts.ts";
+  assertThrowsAsync,
+  assert,
+} from "https://deno.land/std@v0.59.0/testing/asserts.ts";
 import { kill } from "./mod.ts";
 
 const { test, run } = Deno;
@@ -21,27 +23,31 @@ test({
         Deno.execPath(),
         "run",
         "-A",
-        "https://deno.land/std@v0.50.0/http/file_server.ts",
+        "https://deno.land/std@v0.59.0/http/file_server.ts",
+        "--port",
+        "4500",
       ],
       cwd: Deno.cwd(),
     });
 
-    await sleep(5000);
+    await sleep(10_000);
 
-    const resBefore = await fetch("http://localhost:4500");
+    const resBefore = await fetch(
+      "http://localhost:4500/testdata/hello_world.txt",
+    );
 
     assertEquals(resBefore.ok, true);
     assertEquals(resBefore.status, 200);
 
-    await resBefore.trailer;
+    assertEquals(await resBefore.text(), "hello world!");
 
     await kill(ps.pid, { force: Deno.build.os === "windows" });
 
-    const resAfter = await fetch("http://localhost:4500");
+    const err = await assertThrowsAsync(async () => {
+      return fetch("http://localhost:4500/mod.ts");
+    });
 
-    assertEquals(resAfter.ok, false);
-
-    await resAfter.trailer;
+    assert(err.message.indexOf("tcp connect error") > 0);
 
     ps.close();
   },
