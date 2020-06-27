@@ -47,7 +47,8 @@ test({
       return fetch("http://localhost:4500/mod.ts");
     });
 
-    assertStringContains(err.message, "tcp connect error");
+    assertStringContains(err.message, "error");
+    assertStringContains(err.message, "http://localhost:4500/mod.ts");
 
     ps.close();
   },
