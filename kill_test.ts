@@ -1,7 +1,7 @@
 import {
   assertEquals,
   assertThrowsAsync,
-  assert,
+  assertStringContains,
 } from "https://deno.land/std@v0.59.0/testing/asserts.ts";
 import { kill } from "./mod.ts";
 
@@ -47,7 +47,7 @@ test({
       return fetch("http://localhost:4500/mod.ts");
     });
 
-    assert(err.message.indexOf("tcp connect error") > 0);
+    assertStringContains(err.message, "tcp connect error");
 
     ps.close();
   },
