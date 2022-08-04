@@ -3,7 +3,7 @@ import {
   assertThrowsAsync,
   assertStringContains,
 } from "https://deno.land/std@v0.59.0/testing/asserts.ts";
-import { kill } from "./mod.ts";
+import { kill } from "../mod.ts";
 
 const { test, run } = Deno;
 
@@ -33,7 +33,7 @@ test({
     await sleep(10_000);
 
     const resBefore = await fetch(
-      "http://localhost:4500/testdata/hello_world.txt",
+      "http://localhost:4500/Tests/Data/hello_world.txt",
     );
 
     assertEquals(resBefore.ok, true);

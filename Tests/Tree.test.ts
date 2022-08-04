@@ -1,5 +1,5 @@
 import { assert } from "https://deno.land/std@v0.59.0/testing/asserts.ts";
-import { getTree } from "./mod.ts";
+import { getTree } from "../mod.ts";
 
 const { test } = Deno;
 

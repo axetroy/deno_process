@@ -2,7 +2,7 @@ import {
   assert,
   assertEquals,
 } from "https://deno.land/std@v0.59.0/testing/asserts.ts";
-import { get, Process } from "./mod.ts";
+import { get, Process } from "../mod.ts";
 
 const { test } = Deno;
 
