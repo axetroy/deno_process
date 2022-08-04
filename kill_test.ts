@@ -7,7 +7,7 @@ import { kill } from "./mod.ts";
 
 const { test, run } = Deno;
 
-function sleep(ms: number) {
+function sleep(ms: number) : Promise < void >{
   return new Promise((resolve, reject) => {
     setTimeout(() => {
       resolve();
